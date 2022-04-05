@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const uploadFunction = async (file) => {
 	const url = process.env.REACT_APP_CLOUDINARY_URL;

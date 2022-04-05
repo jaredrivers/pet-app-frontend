@@ -2,9 +2,9 @@ import { useState } from "react";
 import PetItem from "./PetItem";
 import { useDispatch, useSelector } from "react-redux";
 import { createPet } from "../actions/petActions";
-import uploadFunction from "../functions/uploadFunction";
 import { toast } from "react-toastify";
 import UploadPhoto from "./UploadPhoto";
+import uploadFunction from "../functions/uploadFunction";
 
 function CreatePetForm({ setSelectForm }) {
 	const dispatch = useDispatch();

@@ -12,9 +12,9 @@ import {
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
 import EditProfile from "../components/EditProfile";
-import uploadFunction from "../functions/uploadFunction.js";
 import * as api from "../api/index";
 import { toast } from "react-toastify";
+import uploadFunction from "../functions/uploadFunction";
 
 function Profile() {
 	const dispatch = useDispatch();
