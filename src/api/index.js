@@ -2,13 +2,13 @@ import axios from "axios";
 
 let API;
 
-if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "production") {
 	API = axios.create({
-		baseURL: "http://localhost:8000",
+		baseURL: process.env.SERVER_URL,
 	});
 } else {
 	API = axios.create({
-		baseURL: process.env.SERVER_URL,
+		baseURL: "http://localhost:8000",
 	});
 }
 
