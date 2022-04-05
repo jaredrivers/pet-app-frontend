@@ -13,7 +13,7 @@ function AdminPage() {
 
 	const clickHandler = (e) => {
 		if (e.target.name === "add") {
-			setSelectForm(<CreatePetForm />);
+			setSelectForm(<CreatePetForm setSelectForm={setSelectForm} />);
 		} else if (e.target.name === "edit") {
 			setSelectForm(<EditPetForm />);
 		} else if (e.target.name === "users") {

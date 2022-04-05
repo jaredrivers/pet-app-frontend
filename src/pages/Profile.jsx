@@ -1,9 +1,8 @@
 import UploadPhoto from "../components/UploadPhoto";
-import upload from "../functions/UploadFunction";
 import ProfileItem from "../components/ProfileItem";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { loadProfile, uploadPhoto } from "../actions/auth";
+import { loadProfile } from "../actions/auth";
 import {
 	DotsHorizontalIcon,
 	MailIcon,
@@ -12,8 +11,10 @@ import {
 } from "@heroicons/react/outline";
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
-import * as api from "../api/index";
 import EditProfile from "../components/EditProfile";
+import uploadFunction from "../functions/uploadFunction.js";
+import * as api from "../api/index";
+import { toast } from "react-toastify";
 
 function Profile() {
 	const dispatch = useDispatch();
@@ -23,8 +24,9 @@ function Profile() {
 	const profileData = useSelector((state) => state.profileData.profileData);
 
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-
 	const [openEditor, setOpenEditor] = useState(false);
+	const [changePhoto, setChangePhoto] = useState(false);
+	const [tempPhoto, setTempPhoto] = useState();
 
 	useEffect(() => {
 		if (user.currentUser !== null && Object.keys(user).length !== 0) {
@@ -32,11 +34,33 @@ function Profile() {
 		}
 	}, [user]);
 
-	// const uploadHandler = async (e) => {
-	// 	// setLoading(true);
-	// 	console.log(e.target.files[0]);
-	// 	// setLoading(false);
-	// };
+	const changeHandler = async (e) => {
+		const file = e.currentTarget.files[0];
+		if (file.size > 10000000) {
+			toast.error("File must be smaller than 10mb", {
+				pauseOnHover: false,
+				autoClose: 3000,
+				theme: "colored",
+			});
+		} else {
+			const tempUrl = URL.createObjectURL(file);
+			setTempPhoto(tempUrl);
+			setChangePhoto(false);
+			try {
+				const url = await uploadFunction(file);
+				const formData = { url };
+				const { data } = await api.updateProfile(formData, user.currentUser.id);
+				dispatch({ type: "AUTH", data });
+			} catch (err) {
+				console.log(err.message);
+				toast.error(err.message, {
+					pauseOnHover: false,
+					autoClose: 3000,
+					theme: "colored",
+				});
+			}
+		}
+	};
 
 	const override = css`
 		display: block;
@@ -99,11 +123,19 @@ function Profile() {
 							</div>
 							<div className='top-right flex flex-col content-center items-center'>
 								<img
-									src={profileData.url ? profileData.url : placeholder}
+									src={tempPhoto ? tempPhoto : profileData.url || placeholder}
 									alt='Profile'
 									className='w-40 mb-5'
 								/>
-								<UploadPhoto />
+								{!changePhoto ? (
+									<button
+										className='p-2 w-[12rem] mx-[3.9rem] bg-theme-bl hover:bg-slate-300 rounded-md'
+										onClick={() => setChangePhoto(true)}>
+										Change Photo
+									</button>
+								) : (
+									<UploadPhoto changeHandler={changeHandler} />
+								)}
 							</div>
 						</div>
 						<div className='bottom flex'></div>

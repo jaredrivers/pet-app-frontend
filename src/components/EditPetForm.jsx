@@ -69,7 +69,7 @@ function EditPetForm() {
 		setLoading(true);
 		const load = async () => {
 			const res = await api.getallpets();
-			setAllPets(res.data);
+			setAllPets(res.data.reverse());
 			setLoading(false);
 		};
 		load();
@@ -179,8 +179,8 @@ function EditPetForm() {
 							/>
 						) : (
 							<div>
-								{openPet.picture ? (
-									<img src={openPet.picture} width='150px' className='pb-8' />
+								{openPet.url ? (
+									<img src={openPet.url} width='150px' className='pb-8' />
 								) : (
 									<img src={placeholder} width='150px' className='pb-8' />
 								)}
@@ -331,6 +331,7 @@ function EditPetForm() {
 						{allPets &&
 							allPets.map((pet) => (
 								<li
+									key={pet._id}
 									id={pet._id}
 									onClick={openHandler}
 									className='hover:bg-red-100 cursor-pointer'>
@@ -347,6 +348,7 @@ function EditPetForm() {
 										height={pet.height}
 										weight={pet.weight}
 										picture={pet.picture}
+										url={pet.url}
 									/>
 								</li>
 							))}

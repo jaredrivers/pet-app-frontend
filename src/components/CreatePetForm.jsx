@@ -2,14 +2,15 @@ import { useState } from "react";
 import PetItem from "./PetItem";
 import { useDispatch, useSelector } from "react-redux";
 import { createPet } from "../actions/petActions";
+import uploadFunction from "../functions/uploadFunction";
+import { toast } from "react-toastify";
 import UploadPhoto from "./UploadPhoto";
-import upload from "../functions/UploadFunction";
 
-function CreatePetForm() {
-	const isLoading = useSelector((state) => state.loading);
+function CreatePetForm({ setSelectForm }) {
 	const dispatch = useDispatch();
 	const [loading, setLoading] = useState(false);
 	const [uploadedURL, setUploadedURL] = useState("");
+	const [photoFile, setPhotoFile] = useState();
 
 	const initialState = {
 		type: "",
@@ -23,6 +24,7 @@ function CreatePetForm() {
 		dietery: "",
 		breed: "",
 		picture: "",
+		url: "",
 	};
 
 	const [petData, setPetData] = useState(initialState);
@@ -31,18 +33,40 @@ function CreatePetForm() {
 		setPetData({ ...petData, [e.target.name]: e.target.value });
 	};
 
-	const submitHandler = (e) => {
+	const submitHandler = async (e) => {
 		e.preventDefault();
-		dispatch(createPet(petData));
+		setLoading(true);
+		try {
+			if (photoFile) {
+				const url = await uploadFunction(photoFile);
+				petData.url = url;
+			}
+			dispatch(createPet(petData));
+			setLoading(false);
+			setSelectForm();
+		} catch (err) {
+			toast.error(err.message, {
+				pauseOnHover: false,
+				autoClose: 3000,
+				theme: "colored",
+			});
+			setLoading(false);
+		}
 	};
 
 	const uploadHandler = async (e) => {
-		setLoading(true);
-		upload(e.target.files[0]).then(({ data }) => {
-			setUploadedURL(data.picture);
-		});
-
-		setLoading(false);
+		const file = e.currentTarget.files[0];
+		setPhotoFile(file);
+		if (file.size > 10000000) {
+			toast.error("File must be smaller than 10mb", {
+				pauseOnHover: false,
+				autoClose: 3000,
+				theme: "colored",
+			});
+		} else {
+			const tempUrl = URL.createObjectURL(file);
+			setUploadedURL(tempUrl);
+		}
 	};
 	const placeholder =
 		"https://res.cloudinary.com/jaredriver/image/upload/v1641802995/201-2011850_pet-footprint-l-dog-paw-icon-png-transparent_yvu1qa.png";
@@ -105,7 +129,7 @@ function CreatePetForm() {
 					<UploadPhoto changeHandler={uploadHandler} />
 					<input
 						type='text'
-						name='picture'
+						name='url'
 						value={uploadedURL}
 						className='hidden'
 						onChange={handleChange}
@@ -161,7 +185,7 @@ function CreatePetForm() {
 						className='bg-gray-200 w-20 p-2 rounded-md m-auto hover:bg-gray-300 disabled:opacity-50'
 						type='submit'
 						onClick={submitHandler}
-						disabled={isLoading}>
+						disabled={loading}>
 						Create
 					</button>
 				</div>

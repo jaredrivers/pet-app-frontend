@@ -8,9 +8,13 @@ export const createPet = (petData) => async (dispatch) => {
 	try {
 		const { data } = await api.createpet(petData);
 
-		dispatch({ type: "CREATE_PET", data });
-
 		dispatch({ type: "LOADING_FALSE" });
+
+		toast.success(`${data.pet.name} successfully added.`, {
+			pauseOnHover: false,
+			autoClose: 3000,
+			theme: "colored",
+		});
 	} catch (err) {
 		toast.error(err.response.data.message, {
 			pauseOnHover: false,

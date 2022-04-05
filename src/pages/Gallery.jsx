@@ -12,7 +12,7 @@ import { useSearchParams } from "react-router-dom";
 function Gallery() {
 	const dispatch = useDispatch();
 	const loading = useSelector((state) => state.loading);
-	const dbPets = useSelector((state) => state.pet.petData);
+	const dbPets = useSelector((state) => state.pet.petData?.reverse());
 	const results = useSelector((state) => state.search.petData);
 	const favorites = useSelector((state) => state.favorites.favorites);
 	const fostering = useSelector((state) => state.fostering);
@@ -40,23 +40,6 @@ function Gallery() {
 		}
 	}, [user]);
 
-	// useEffect(() => {
-	// 	if (favorites && favorites.favorites !== null) {
-	// 		setFavoritedPets(favorites.favorites);
-	// 	}
-	// }, [favorites]);
-
-	// useEffect(() => {
-	// 	if (ownedPets && Object.keys(ownedPets).length !== 0) {
-	// 		setAdoptedPets(ownedPets.ownedPets);
-	// 	}
-	// }, [ownedPets]);
-	// useEffect(() => {
-	// 	if (fostering && Object.keys(fostering).length !== 0) {
-	// 		setFosteredPets(fostering.fostering);
-	// 	}
-	// }, [fostering]);
-
 	return loading ? (
 		<div className=' flex w-full h-full justify-center items-center bg-[url(./imgs/home1.jpg)] bg-cover'>
 			<HashLoader loading={loading} css={override} size={100} color='#5a7bb0' />
@@ -80,7 +63,7 @@ function Gallery() {
 								id={pet._id}
 								height={pet.height}
 								weight={pet.weight}
-								picture={pet.picture}
+								url={pet.url}
 							/>
 						</li>
 					))
@@ -103,6 +86,7 @@ function Gallery() {
 										weight={pet.weight}
 										picture={pet.picture}
 										likedPets={favorites}
+										url={pet.url}
 									/>
 								</li>
 							))}

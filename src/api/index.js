@@ -1,8 +1,16 @@
 import axios from "axios";
 
-const API = axios.create({
-	baseURL: "https://pett-app-back-end.herokuapp.com/",
-});
+let API;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+	API = axios.create({
+		baseURL: "http://localhost:8000",
+	});
+} else {
+	API = axios.create({
+		baseURL: process.env.SERVER_URL,
+	});
+}
 
 API.interceptors.request.use((req) => {
 	if (localStorage.getItem("profile")) {

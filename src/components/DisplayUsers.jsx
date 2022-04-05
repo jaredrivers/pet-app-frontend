@@ -89,6 +89,7 @@ function DisplayUsers() {
 									favorites={user.favorites}
 									email={user.email}
 									openHandler={openHandler}
+									imgURL={user.url}
 								/>
 							</li>
 						))}

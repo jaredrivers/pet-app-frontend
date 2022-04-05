@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { likePet } from "../actions/petActions.js";
 import PetCardButton from "./PetCardButton.jsx";
 import { fosterPet, adoptPet, returnPet } from "../actions/petActions.js";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function GalleryItem({
@@ -18,7 +18,7 @@ function GalleryItem({
 	id,
 	height,
 	weight,
-	picture,
+	url,
 	onClick,
 	Icon,
 	closeHandler,
@@ -56,7 +56,10 @@ function GalleryItem({
 	};
 
 	return (
-		<div id={id} className='flex justify-center outer h-[28rem] mx-2 my-2'>
+		<div
+			id={id}
+			name={name}
+			className='flex justify-center outer h-[28rem] mx-2 my-2'>
 			<div className='flex flex-col rounded-lg shadow-lg bg-gray-200 p-4 w-[20rem]'>
 				{Icon && (
 					<div onClick={closeHandler}>
@@ -80,7 +83,7 @@ function GalleryItem({
 				</div>
 				<div className='center1 flex flex-col items-center m-1'>
 					<img
-						src={picture === "" ? placeholder : picture}
+						src={url ? url : placeholder}
 						alt='pet'
 						width='150'
 						className='rounded-md'

@@ -25,7 +25,7 @@ function UserCard({
 		<div
 			id='id'
 			className='flex flex-col bg-theme-bl sm:h-[60vh] p-2 rounded-md mb-2'>
-			<div className='top flex h-[25%] items-center mb-2 justify-between'>
+			<div className='top flex h-[25%] items-center mb-2 justify-between overflow-hidden'>
 				<div className='flex w-full justify-center'>
 					<p>
 						{firstName} {lastName}
