@@ -2,7 +2,7 @@ import axios from "axios";
 
 let API;
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV !== "development") {
 	API = axios.create({
 		baseURL: process.env.SERVER_URL,
 	});
