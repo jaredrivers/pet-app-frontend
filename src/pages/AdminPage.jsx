@@ -9,7 +9,6 @@ import EditPetForm from "../components/EditPetForm";
 function AdminPage() {
 	const [selectForm, setSelectForm] = useState();
 	const sidebar = useSelector((state) => state.isSidebarOpen);
-	const navigate = useNavigate();
 
 	const clickHandler = (e) => {
 		if (e.target.name === "add") {

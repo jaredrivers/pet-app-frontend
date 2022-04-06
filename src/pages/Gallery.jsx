@@ -6,7 +6,6 @@ import AdvancedSearch from "../components/AdvancedSearch";
 import { css } from "@emotion/react";
 import HashLoader from "react-spinners/HashLoader";
 import { loadProfile } from "../actions/auth";
-import { getFavorites } from "../actions/petActions";
 import { useSearchParams } from "react-router-dom";
 
 function Gallery() {

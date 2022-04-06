@@ -39,8 +39,6 @@ function MyPets() {
 		for (let i = 0; i < list.length; i++) {
 			let listName = Object.keys(list[i])[0];
 			if (list[i] && list[i][listName] !== null) {
-				console.log(i, list[i], list[i][listName]);
-
 				let items = list[i][listName];
 				let pets = petData.petData;
 				let petList = [];
@@ -66,14 +64,6 @@ function MyPets() {
 	useEffect(() => {
 		petData && petData.petData !== null && startFunction();
 	}, [petData]);
-
-	useEffect(() => {
-		favorites && favorites.favorites !== null && startFunction();
-	}, [favorites]);
-
-	useEffect(() => {
-		fostering && fostering.fostering !== null && startFunction();
-	}, [fostering]);
 
 	const openHandler = async (e) => {
 		const petId = e.currentTarget.id;
