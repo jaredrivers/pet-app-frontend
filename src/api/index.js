@@ -4,7 +4,7 @@ let API;
 
 if (process.env.NODE_ENV === "production") {
 	API = axios.create({
-		baseURL: process.env.SERVER_URL,
+		baseURL: "https://pett-app-back-end.herokuapp.com",
 	});
 } else {
 	API = axios.create({
