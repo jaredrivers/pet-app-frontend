@@ -72,7 +72,8 @@ function MyPets() {
 	};
 
 	const closeHandler = () => {
-		dispatch(getFavorites());
+		dispatch(getallPets());
+		dispatch(loadProfile(user.currentUser.id));
 		setOpenPet();
 	};
 
@@ -106,6 +107,7 @@ function MyPets() {
 							onClick={closeHandler}
 							Icon={XIcon}
 							setUnlike={setUnlike}
+							url={openPet.url}
 						/>
 					</div>
 				) : (

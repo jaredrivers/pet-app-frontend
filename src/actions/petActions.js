@@ -31,7 +31,7 @@ export const getallPets = () => async (dispatch) => {
 	try {
 		const res = await api.getallpets();
 
-		let data = res.data.filter((pet) => pet.adoptionStatus !== "Adopted");
+		let data = res.data;
 
 		dispatch({ type: "ALL_PETS", data });
 		dispatch({ type: "LOADING_FALSE" });
@@ -51,8 +51,17 @@ export const searchPets = (search, pets) => async (dispatch) => {
 	for (let [key, value] of Object.entries(search)) {
 		for (let i = 0; i < pets.length; i++) {
 			for (let [petKey, petValue] of Object.entries(pets[i])) {
-				if (value != "" && petValue != "" && typeof petValue == "string") {
-					if (value.toLowerCase() == petValue.toLowerCase()) {
+				if (
+					value !== "" &&
+					petValue !== "" &&
+					petKey !== "_id" &&
+					petKey !== "url"
+				) {
+					value = value.toLowerCase().toString();
+					let regex = new RegExp(value, "gi");
+					petValue = petValue.toString().toLowerCase();
+
+					if (petValue.match(regex)) {
 						results.push(pets[i]);
 					}
 				}
@@ -65,6 +74,7 @@ export const searchPets = (search, pets) => async (dispatch) => {
 			}
 		}
 	}
+
 	const uniqueResults = Array.from(new Set(results.map((a) => a._id))).map(
 		(id) => {
 			return results.find((a) => a._id === id);
@@ -100,7 +110,6 @@ export const fosterPet = (petId) => async (dispatch) => {
 export const returnPet = (petId) => async (dispatch) => {
 	try {
 		const { data } = await api.returnPet(petId);
-		console.log(data);
 		dispatch({ type: "SET_FOSTERING", fostering: data.fostering });
 		dispatch({ type: "SET_MY_PETS", ownedPets: data.ownedPets });
 		toast.success(data.message, {

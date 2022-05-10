@@ -13,7 +13,6 @@ const uploadFunction = async (file) => {
 		const res = await axios.post(url, formData);
 		return res.data.url;
 	} catch (err) {
-		console.log(err.response.data.error.message);
 		toast.error(err.response.data.error.message, {
 			pauseOnHover: false,
 			autoClose: 3000,

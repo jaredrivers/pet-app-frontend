@@ -1,6 +1,6 @@
 import { BookmarkIcon } from "@heroicons/react/outline";
 import { useDispatch, useSelector } from "react-redux";
-import { likePet } from "../actions/petActions.js";
+import { getallPets, likePet } from "../actions/petActions.js";
 import PetCardButton from "./PetCardButton.jsx";
 import { fosterPet, adoptPet, returnPet } from "../actions/petActions.js";
 import { toast } from "react-toastify";

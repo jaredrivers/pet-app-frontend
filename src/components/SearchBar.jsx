@@ -1,6 +1,6 @@
 import { SearchIcon } from "@heroicons/react/outline";
 
-function SearchBar({ onChange, name, submitHandler }) {
+function SearchBar({ onChange, name, submitHandler, value }) {
 	return (
 		<div className='flex rounded-xl bg-gray-200 w-5/6 p-2'>
 			<SearchIcon className='w-6 ml-2' />
@@ -10,6 +10,7 @@ function SearchBar({ onChange, name, submitHandler }) {
 				onChange={onChange}
 				name={name}
 				onSubmit={submitHandler}
+				value={value}
 			/>
 		</div>
 	);

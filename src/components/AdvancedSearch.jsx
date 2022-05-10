@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SearchBar from "./SearchBar";
-import { searchPets } from "../actions/petActions";
+import { getallPets, searchPets } from "../actions/petActions";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AdvancedSearch({ search }) {
 	const dispatch = useDispatch();
-	const [advancedSearch, setAdvancedSearch] = useState(false);
 	const pets = useSelector((state) => state.pet.petData);
 	const results = useSelector((state) => state.search.petData);
+	const location = useLocation();
+
 	const [alert, SetAlert] = useState();
+	const [advancedSearch, setAdvancedSearch] = useState(false);
+	const [initSearch, setInitSearch] = useState(search);
 
 	const initialState = {
 		searchbar: "",
@@ -21,16 +25,13 @@ function AdvancedSearch({ search }) {
 
 	const [petData, setPetData] = useState(initialState);
 
-	useEffect(() => {
-		if (search && pets) {
-			console.log(search);
-			// dispatch(searchPets(search, pets));
-		}
-	}, []);
-
 	const handleChange = (e) => {
 		if (alert) {
 			SetAlert();
+		}
+		if (initSearch && location.pathname === "/gallery") {
+			console.log("new search");
+			setInitSearch(e.currentTarget.value);
 		}
 		setPetData({ ...petData, [e.target.name]: e.target.value });
 	};
@@ -53,7 +54,6 @@ function AdvancedSearch({ search }) {
 		if (emptyValues === 6) {
 			SetAlert("Please enter search criteria.");
 		} else {
-			console.log(petData);
 			dispatch(searchPets(petData, pets));
 		}
 	};
@@ -65,6 +65,7 @@ function AdvancedSearch({ search }) {
 				emptyValues++;
 				if (emptyValues == 6) {
 					dispatch({ type: "RESET_RESULTS" });
+					setInitSearch();
 				}
 			}
 		}
@@ -78,13 +79,24 @@ function AdvancedSearch({ search }) {
 		}
 	}, [results]);
 
+	useEffect(() => {
+		if (search) {
+			let data = { searchBar: search };
+			dispatch(searchPets(data, pets));
+		}
+	}, [search]);
+
 	return (
 		<div className='flex flex-col w-full sticky items-center'>
 			<form
 				onSubmit={submitHandler}
 				className='w-full flex flex-col items-center'>
 				<div className='flex w-5/6 ml-auto'>
-					<SearchBar onChange={handleChange} name='searchbar' />{" "}
+					<SearchBar
+						onChange={handleChange}
+						name='searchbar'
+						value={initSearch && initSearch}
+					/>
 					<button
 						type='submit'
 						onSubmit={submitHandler}
