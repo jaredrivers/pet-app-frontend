@@ -62,10 +62,11 @@ function EditProfile({ closeHandler, setOpenEditor }) {
 	return (
 		<form
 			onSubmit={submitHandler}
-			className='flex flex-col  w-[60%] rounded-md shadow-md bg-theme-lp justify-center items-center relative p-10 '>
+			className='flex flex-col  w-[60%] rounded-md shadow-md bg-theme-lp justify-center items-center relative p-10 '
+		>
 			<XIcon
 				onClick={closeHandler}
-				className='absolute top-2 right-4 w-7 cursor-pointer'
+				className='absolute top-2 right-4 w-7 cursor-pointer hover:text-black/50'
 			/>
 			<div className='flex flex-col justify-center items-end space-y-3'>
 				<EditProfileItem
@@ -112,7 +113,8 @@ function EditProfile({ closeHandler, setOpenEditor }) {
 			<button
 				disabled={loading}
 				type='submit'
-				className='text-white w-20 p-2 bg-theme-bl cursor-pointer hover:bg-gray-400 rounded-md mt-5 disabled:opacity-50'>
+				className='text-black w-20 p-2 bg-theme-bl cursor-pointer hover:bg-gray-400 rounded-md mt-5 disabled:opacity-50'
+			>
 				Submit
 			</button>
 		</form>

@@ -84,7 +84,7 @@ function Profile() {
 		</div>
 	) : (
 		profileData && (
-			<div className='profile-page flex bg-[url(./imgs/profile3.jpg)] bg-cover w-full h-full flex-col pt-[5rem] items-center'>
+			<div className='profile-page flex bg-cover w-full h-full flex-col pt-[5rem] items-center'>
 				{openEditor ? (
 					<EditProfile
 						closeHandler={() => setOpenEditor(false)}
@@ -99,7 +99,8 @@ function Profile() {
 						{isMenuOpen && (
 							<div
 								onClick={openEditHandler}
-								className='w-30 cursor-pointer bg-theme-bl hover:bg-gray-400 rounded-md p-2 absolute top-8 right-8'>
+								className='w-30 cursor-pointer bg-theme-bl hover:bg-gray-400 rounded-md p-2 absolute top-8 right-8'
+							>
 								<p>Edit Profile</p>
 							</div>
 						)}
@@ -130,7 +131,8 @@ function Profile() {
 								{!changePhoto ? (
 									<button
 										className='p-2 w-[12rem] mx-[3.9rem] bg-theme-bl hover:bg-slate-300 rounded-md'
-										onClick={() => setChangePhoto(true)}>
+										onClick={() => setChangePhoto(true)}
+									>
 										Change Photo
 									</button>
 								) : (

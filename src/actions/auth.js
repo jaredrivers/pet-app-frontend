@@ -27,6 +27,7 @@ export const signUp = (formData, navigate) => async (dispatch) => {
 			autoClose: 3000,
 			theme: "colored",
 		});
+		dispatch({ type: "LOADING_FALSE" });
 	}
 };
 
@@ -38,7 +39,10 @@ export const signIn = (formData, navigate) => async (dispatch) => {
 
 		dispatch({ type: "LOADING_FALSE" });
 		dispatch({ type: "MODAL_CLOSE" });
-
+		toast.success("Login success!", {
+			theme: "colored",
+			autoClose: 3000,
+		});
 		navigate("/");
 	} catch (err) {
 		toast.error(err.response.data.message, {

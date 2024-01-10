@@ -30,9 +30,7 @@ export const getallPets = () => async (dispatch) => {
 
 	try {
 		const res = await api.getallpets();
-
 		let data = res.data;
-
 		dispatch({ type: "ALL_PETS", data });
 		dispatch({ type: "LOADING_FALSE" });
 	} catch (err) {

@@ -5,6 +5,7 @@ import { switchState } from "../actions/switchState";
 import { useState } from "react";
 import { signIn } from "../actions/auth";
 import { useNavigate } from "react-router-dom";
+import image from "../imgs/modal12.jpg";
 
 function LogIn({ loginHandler }) {
 	const dispatch = useDispatch();
@@ -36,10 +37,13 @@ function LogIn({ loginHandler }) {
 
 	return (
 		<div className='flex items-center'>
-			<div className='left h-[35rem] hidden md:flex w-[60%] bg-[url(./imgs/modal12.jpg)] bg-cover'></div>
+			<div className='imgWrapper w-[50%] hidden md:flex h-[35rem]'>
+				<img src={image} alt='' className='object-cover h-full' />
+			</div>
 			<form
-				className='right w-full md:w-[70%] flex flex-col items-center justify-center py-4 h-[30rem]'
-				onSubmit={logInHandler}>
+				className='right w-full md:w-[60%] flex flex-col items-center justify-center py-4 h-[30rem]'
+				onSubmit={logInHandler}
+			>
 				<ModalItem
 					onChange={handleChange}
 					title='Email'
@@ -55,14 +59,16 @@ function LogIn({ loginHandler }) {
 				<button
 					disabled={loading}
 					type='submit'
-					className='rounded-lg bg-white p-2 w-2/4 mt-5 disabled:opacity-50 '>
+					className='rounded-lg bg-white p-2 w-2/4 mt-5 disabled:opacity-50 '
+				>
 					Submit
 				</button>
 				<span className='text-sm text-off-white m-3'>
 					Don't have an account?
 					<span
 						onClick={clickHandler}
-						className='cursor-pointer text-blue-300 ml-2'>
+						className='cursor-pointer text-blue-300 ml-2'
+					>
 						Sign Up
 					</span>
 				</span>

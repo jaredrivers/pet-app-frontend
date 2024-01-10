@@ -59,7 +59,8 @@ function GalleryItem({
 		<div
 			id={id}
 			name={name}
-			className='flex justify-center outer h-[28rem] mx-2 my-2'>
+			className='flex justify-center outer h-[28rem] mx-2 my-2'
+		>
 			<div className='flex flex-col rounded-lg shadow-lg bg-gray-200 p-4 w-[20rem]'>
 				{Icon && (
 					<div onClick={closeHandler}>
@@ -83,10 +84,13 @@ function GalleryItem({
 				</div>
 				<div className='center1 flex flex-col items-center m-1'>
 					<img
+						onError={(e) => {
+							e.currentTarget.src = placeholder;
+						}}
 						src={url ? url : placeholder}
 						alt='pet'
 						width='150'
-						className='rounded-md'
+						className='rounded-md max-h-40 object-cover'
 					/>
 					<p className='mt-2 text-[1.1rem]'>Status: {adoptionStatus}</p>
 				</div>

@@ -5,11 +5,13 @@ import { switchState } from "../actions/switchState";
 import { useState } from "react";
 import { signUp } from "../actions/auth";
 import { useNavigate } from "react-router-dom";
+import image from "../imgs/signup.jpg";
 
 function Signup() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const login = useSelector((state) => state.login);
+	const loading = useSelector((state) => state.loading);
 
 	const initialState = {
 		firstName: "",
@@ -37,10 +39,13 @@ function Signup() {
 
 	return (
 		<div className='flex'>
-			<div className='left h-[38.5rem] hidden md:flex w-[60%] bg-[url(./imgs/signup.jpg)] bg-cover'></div>
+			<div className='imgWrapper w-[50%] hidden md:flex h-i'>
+				<img src={image} alt='' className='object-cover h-full' />
+			</div>
 			<form
 				className='right w-full md:w-1/2 flex flex-col items-center justify-center py-4'
-				onSubmit={signUpHandler}>
+				onSubmit={signUpHandler}
+			>
 				<ModalItem
 					title='First Name'
 					type='text'
@@ -78,14 +83,20 @@ function Signup() {
 					onChange={handleChange}
 				/>
 
-				<button type='submit' className='rounded-lg bg-white p-2 w-2/4 mt-5'>
+				<button
+					type='submit'
+					className={`rounded-lg bg-white p-2 w-2/4 mt-5 ${
+						loading && "text-black/20"
+					}`}
+				>
 					Submit
 				</button>
 				<span className='text-sm text-off-white m-3'>
 					Already have an account?
 					<span
 						onClick={clickHandler}
-						className='cursor-pointer text-blue-300 ml-2'>
+						className='cursor-pointer text-blue-300 ml-2'
+					>
 						Log In
 					</span>
 				</span>
