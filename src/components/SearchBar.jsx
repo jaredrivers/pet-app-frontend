@@ -10,7 +10,7 @@ function SearchBar({ onChange, name, submitHandler, value }) {
 				onChange={onChange}
 				name={name}
 				onSubmit={submitHandler}
-				value={value}
+				value={value ? value : ""}
 			/>
 		</div>
 	);
